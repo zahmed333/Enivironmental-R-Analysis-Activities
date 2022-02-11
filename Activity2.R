@@ -104,12 +104,13 @@ abline(v = mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE) + sd(datW$TAVE[datW$siteN
        lty = 3,
        lwd = 3)
 
+#Livermore
 hist(datW$TAVE[datW$siteN == 2],
      freq=FALSE, 
      main = paste(levels(datW$NAME)[2]),
      xlab = "Average daily temperature (degrees C)", 
      ylab="Relative frequency",
-     col="grey50",
+     col="black",
      border="white")
 
 abline(v = mean(datW$TAVE[datW$siteN == 2],na.rm=TRUE), 
@@ -126,13 +127,13 @@ abline(v = mean(datW$TAVE[datW$siteN == 2],na.rm=TRUE) + sd(datW$TAVE[datW$siteN
        lty = 3,
        lwd = 3)
 
-
+#Mandan Experiment Station
 hist(datW$TAVE[datW$siteN == 3],
      freq=FALSE, 
      main = paste(levels(datW$NAME)[3]),
      xlab = "Average daily temperature (degrees C)", 
      ylab="Relative frequency",
-     col="grey50",
+     col="blue",
      border="white")
 
 abline(v = mean(datW$TAVE[datW$siteN == 3],na.rm=TRUE), 
@@ -149,13 +150,13 @@ abline(v = mean(datW$TAVE[datW$siteN == 3],na.rm=TRUE) + sd(datW$TAVE[datW$siteN
        lty = 3,
        lwd = 3)
 
-
+#Mormon Flat
 hist(datW$TAVE[datW$siteN == 4],
      freq=FALSE, 
      main = paste(levels(datW$NAME)[4]),
      xlab = "Average daily temperature (degrees C)", 
      ylab="Relative frequency",
-     col="grey50",
+     col="green",
      border="white")
 
 abline(v = mean(datW$TAVE[datW$siteN == 4],na.rm=TRUE), 
@@ -173,6 +174,27 @@ abline(v = mean(datW$TAVE[datW$siteN == 4],na.rm=TRUE) + sd(datW$TAVE[datW$siteN
        lwd = 3)
 
 
+#Question 7
+hist(datW$PRCP[datW$siteN == 1],
+     freq=FALSE, 
+     main = paste(levels(datW$NAME)[1]),
+     xlab = "Average Daily Percipitation", 
+     ylab="Relative frequency",
+     col="grey50",
+     border="white")
+
+#Question 8
+annualPRCP <- aggregate(datW$PRCP, by = list(datW$year, datW$NAME), FUN = "sum", na.rm=TRUE)
+annualPRCP
+
+hist(annualPRCP$x[annualPRCP$Group.2 == "ABERDEEN, WA US"],
+     freq=FALSE, 
+     main = paste(levels(datW$NAME)[1]),
+     xlab = "Years", 
+     ylab="Amount of Annual Percipitation",
+     col="grey50",
+     border="white")
+
 
 #pnorm(value to evaluate at (note this will evaluate for all values and below),mean, standard deviation)
 pnorm(0,
@@ -188,8 +210,8 @@ pnorm(5,
 pnorm(5,
       mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
       sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))- pnorm(0,
-      mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
-      sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
+                                                        mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
+                                                        sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
 
 1 - pnorm(20,
           mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
