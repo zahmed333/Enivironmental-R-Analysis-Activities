@@ -73,6 +73,7 @@ hist(datW$TAVE[datW$siteN == 1],
      col="grey50",
      border="white")
 
+par(mfrow=c(2,2))
 
 #make a histogram for the first site in our levels, Aberdeen
 #main= is the title name argument.
@@ -102,3 +103,100 @@ abline(v = mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE) + sd(datW$TAVE[datW$siteN
        col = "tomato3", 
        lty = 3,
        lwd = 3)
+
+hist(datW$TAVE[datW$siteN == 2],
+     freq=FALSE, 
+     main = paste(levels(datW$NAME)[2]),
+     xlab = "Average daily temperature (degrees C)", 
+     ylab="Relative frequency",
+     col="grey50",
+     border="white")
+
+abline(v = mean(datW$TAVE[datW$siteN == 2],na.rm=TRUE), 
+       col = "tomato3",
+       lwd = 3)
+
+abline(v = mean(datW$TAVE[datW$siteN == 2],na.rm=TRUE) - sd(datW$TAVE[datW$siteN == 2],na.rm=TRUE), 
+       col = "tomato3", 
+       lty = 3,
+       lwd = 3)
+
+abline(v = mean(datW$TAVE[datW$siteN == 2],na.rm=TRUE) + sd(datW$TAVE[datW$siteN == 2],na.rm=TRUE), 
+       col = "tomato3", 
+       lty = 3,
+       lwd = 3)
+
+
+hist(datW$TAVE[datW$siteN == 3],
+     freq=FALSE, 
+     main = paste(levels(datW$NAME)[3]),
+     xlab = "Average daily temperature (degrees C)", 
+     ylab="Relative frequency",
+     col="grey50",
+     border="white")
+
+abline(v = mean(datW$TAVE[datW$siteN == 3],na.rm=TRUE), 
+       col = "tomato3",
+       lwd = 3)
+
+abline(v = mean(datW$TAVE[datW$siteN == 3],na.rm=TRUE) - sd(datW$TAVE[datW$siteN == 3],na.rm=TRUE), 
+       col = "tomato3", 
+       lty = 3,
+       lwd = 3)
+
+abline(v = mean(datW$TAVE[datW$siteN == 3],na.rm=TRUE) + sd(datW$TAVE[datW$siteN == 3],na.rm=TRUE), 
+       col = "tomato3", 
+       lty = 3,
+       lwd = 3)
+
+
+hist(datW$TAVE[datW$siteN == 4],
+     freq=FALSE, 
+     main = paste(levels(datW$NAME)[4]),
+     xlab = "Average daily temperature (degrees C)", 
+     ylab="Relative frequency",
+     col="grey50",
+     border="white")
+
+abline(v = mean(datW$TAVE[datW$siteN == 4],na.rm=TRUE), 
+       col = "tomato3",
+       lwd = 3)
+
+abline(v = mean(datW$TAVE[datW$siteN == 4],na.rm=TRUE) - sd(datW$TAVE[datW$siteN == 4],na.rm=TRUE), 
+       col = "tomato3", 
+       lty = 3,
+       lwd = 3)
+
+abline(v = mean(datW$TAVE[datW$siteN == 4],na.rm=TRUE) + sd(datW$TAVE[datW$siteN == 4],na.rm=TRUE), 
+       col = "tomato3", 
+       lty = 3,
+       lwd = 3)
+
+
+
+#pnorm(value to evaluate at (note this will evaluate for all values and below),mean, standard deviation)
+pnorm(0,
+      mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
+      sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
+
+
+#pnrom with 5 gives me all probability (area of the curve) below 5 
+pnorm(5,
+      mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
+      sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
+
+pnorm(5,
+      mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
+      sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))- pnorm(0,
+      mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
+      sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
+
+1 - pnorm(20,
+          mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
+          sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
+
+#pnorm of 20 gives me all probability (area of the curve) below 20 
+#subtracting from one leaves me with the area above 20
+qnorm(0.95,
+      mean(datW$TAVE[datW$siteN == 1],na.rm=TRUE),
+      sd(datW$TAVE[datW$siteN == 1],na.rm=TRUE))
