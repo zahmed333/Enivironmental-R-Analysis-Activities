@@ -47,18 +47,6 @@ mean(datW$TMAX[datW$NAME == "ABERDEEN, WA US"], na.rm=TRUE)
 #calculate the average daily temperature
 datW$TAVE <- datW$TMIN + ((datW$TMAX-datW$TMIN)/2)
 
-#get the mean across all sites
-#the by function is a list of one or more variables to index over.
-#FUN indicates the function we want to use
-#if you want to specify any function specific arguments use a comma and add them after the function
-#here we want to use the na.rm arguments specific to 
-averageTemp <- aggregate(datW$TAVE, by=list(datW$NAME), FUN="mean",na.rm=TRUE)
-averageTemp
-
-#change the automatic output of column names to be more meaningful
-colnames(averageTemp) <- c("NAME","MAAT")
-averageTemp
-
 datW$siteN <- as.numeric(datW$NAME)
 
 #make a histogram for the first site in our levels
@@ -194,6 +182,26 @@ hist(annualPRCP$x[annualPRCP$Group.2 == "ABERDEEN, WA US"],
      ylab="Amount of Annual Percipitation",
      col="grey50",
      border="white")
+
+
+
+#Question 9
+
+#get the mean across all sites
+#the by function is a list of one or more variables to index over.
+#FUN indicates the function we want to use
+#if you want to specify any function specific arguments use a comma and add them after the function
+#here we want to use the na.rm arguments specific to 
+averageTemp <- aggregate(datW$TAVE, by=list(datW$NAME), FUN="mean",na.rm=TRUE)
+averageTemp
+
+#change the automatic output of column names to be more meaningful
+colnames(averageTemp) <- c("NAME","MAAT")
+averageTemp
+
+#Calculates the average annual precipitation per site
+averagePRCP <- aggregate(datW$PRCP, by=list(datW$NAME), FUN="mean",na.rm=TRUE)
+averagePRCP
 
 
 #pnorm(value to evaluate at (note this will evaluate for all values and below),mean, standard deviation)
