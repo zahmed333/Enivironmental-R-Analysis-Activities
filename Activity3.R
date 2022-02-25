@@ -35,3 +35,9 @@ sensorInfo <-   read.csv("Z:\\data\\bewkes\\bewkes_weather.csv",
                          na.strings=c("#N/A"), nrows=2)
 
 print(sensorInfo)
+
+#get column names from sensorInfo table
+# and set weather station colnames  to be the same
+colnames(datW) <-   colnames(sensorInfo)
+#preview data
+print(datW[1,])
