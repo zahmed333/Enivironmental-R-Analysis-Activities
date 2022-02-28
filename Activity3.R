@@ -43,7 +43,7 @@ colnames(datW) <-   colnames(sensorInfo)
 print(datW[1,])
 
 #use install.packages to install lubridate
-//install.packages(c("lubridate"))
+#install.packages(c("lubridate"))
 
 library(lubridate)
 
@@ -127,7 +127,7 @@ points(datW$DD[lightscale > 0], lightscale[lightscale > 0],
 # QUESTION 5
 
 
-assert(max(datW$precipitation) == max(datW$lightning.acvitivy),
+assert(length(datW$precipitation) == length(datW$lightning.acvitivy),
        "error")
 
 
@@ -141,25 +141,45 @@ datW$air.tempQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0,
 
 #QUESTION 6
 
-datW$air.tempQ2 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
-                          ifelse(datW$precipitation > 5, NA, datW$air.tempQ1),
-                          ifelse(is.NA(datW$wind.speed), NA))
+datW$wind.speedQ1 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >0, NA,
+                          ifelse(datW$precipitation > 5, NA, datW$wind.speed))
 
-assert(is.NA(datW$wind.speed) == FALSE, "There are still suspicious values")
+
+assert(length(datW$wind.speedQ1) == length(datW$air.tempQ2), "There are still suspicious values")
+
 
 #make it empty to start and add in features
-plot(datW$DD , datW$air.tempQ2, xlab = "Day of Year", ylab = "wind speed",
+plot(datW$doy , datW$wind.speedQ1, xlab = "Day of Year", ylab = "wind speed",
      type="n")
 #plot precipitation points only when there is precipitation 
 #make the points semi-transparent
-points(datW$DD[datW$precipitation > 0], datW$precipitation[datW$precipitation > 0],
-       col= rgb(95/255,158/255,160/255,.5), pch=15)        
+points(datW$doy, datW$wind.speedQ1,
+       col= rgb(95/255,158/255,160/255,.5), pch=15)
+abline(lm(datW$wind.speedQ1 ~ datW$doy))
 
 # How to make the lines
 
 
 #Question 7
 
-# check days 180 - 195
+# check days leading up to outage
+# Manually comparing the data in the frame
+datW[datW$doy > 183,]
+datW[datW$doy > 184,]
+datW[datW$doy > 186,]
+datW[datW$doy > 188,]
+datW[datW$doy > 190,]
+datW[datW$doy > 191,]
+
+# compare using the dates with the plots aligned
+plot(datW$DD, datW$soil.moisture, pch=19, type="b", xlab = "Day of Year",
+     ylab="Soil moisture (cm3 water per cm3 soil)")
+
+plot(datW$DD, datW$air.temperature, pch=19, type="b", xlab = "Day of Year",
+     ylab="Air temperature (degrees C)")
+
+#question 8
+
+
 
 
