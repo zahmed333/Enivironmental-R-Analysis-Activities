@@ -150,14 +150,12 @@ assert(length(datW$wind.speedQ1) == length(datW$air.tempQ2), "There are still su
 
 #make it empty to start and add in features
 plot(datW$doy , datW$wind.speedQ1, xlab = "Day of Year", ylab = "wind speed",
-     type="n")
+     type="o")
 #plot precipitation points only when there is precipitation 
 #make the points semi-transparent
 points(datW$doy, datW$wind.speedQ1,
        col= rgb(95/255,158/255,160/255,.5), pch=15)
 abline(lm(datW$wind.speedQ1 ~ datW$doy))
-
-# How to make the lines
 
 
 #Question 7
@@ -179,7 +177,28 @@ plot(datW$DD, datW$air.temperature, pch=19, type="b", xlab = "Day of Year",
      ylab="Air temperature (degrees C)")
 
 #question 8
+  avgWS <- signif(mean(datW$wind.speed, na.rm = TRUE))
+  avgAT <- signif(mean(datW$air.temperature, na.rm = TRUE))
+  avgSM <- signif(mean(datW$soil.moisture, na.rm = TRUE))
+  avgST <- signif(mean(datW$soil.temperature, na.rm = TRUE))
+  avgP <- signif(mean(datW$precipitation, na.rm = TRUE))
 
 
+  requestedTable <- data.frame(avgWS, avgAT, avgSM, avgST, avgP)
+#Question 9
 
+par(mfrow=c(2,2))
+
+# compare using the dates with the plots aligned
+plot(datW$DD, datW$soil.moisture, pch=19, type="b", xlab = "Day of Year",
+     ylab="Soil moisture (cm3 water per cm3 soil)")
+
+plot(datW$DD, datW$air.temperature, pch=19, type="b", xlab = "Day of Year",
+     ylab="Air temperature (degrees C)")
+
+plot(datW$DD, datW$soil.temperature, pch=19, type="b", xlab = "Day of Year",
+     ylab="Soil temperature (degrees C)")
+
+plot(datW$DD, datW$precipitation, pch=19, type="b", xlab = "Day of Year",
+     ylab="Precipitation (mm)")
 
