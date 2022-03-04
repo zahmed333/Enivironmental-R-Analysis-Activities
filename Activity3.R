@@ -34,7 +34,7 @@ print(datW[1,])
 #use install.packages to install lubridate
 #install.packages(c("lubridate"))
 
-#library(lubridate)
+library(lubridate)
 #commented out afterwards
 
 #convert to standardized format
@@ -118,13 +118,19 @@ datW$wind.speedQ1 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >
                           ifelse(datW$precipitation > 5, NA, datW$wind.speed))
 
 #assert check to check for NA values
-windSNA <- is.na(datW$wind.speedQ1)
-airTNA <- is.na(datW$air.tempQ2)
-windSNA
+windSNA <- which(is.na(datW$wind.speedQ1))
+airTNA <- which(is.na(datW$air.tempQ2))
 
-assert(length(length((is.na(datW$wind.speedQ1)[which(is.na(datW$wind.speedQ1==TRUE))]))) == length(datW$wind.speedQ1),
-       "There are still suspicious values")
-
+# Counter to loop through the values in windSNA
+counter <- 1
+#For loop to loop through and check if all locations of NA match both
+#Wind speed and Air Temp that we filtered
+for (val in windSNA) {
+  assert(windSNA[counter] == airTNA[counter],
+         "there seems to be a suspicious value")
+  counter = counter + 1
+}
+  
 
 
 
