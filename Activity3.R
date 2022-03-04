@@ -118,10 +118,15 @@ datW$wind.speedQ1 <- ifelse(datW$precipitation  >= 2 & datW$lightning.acvitivy >
                           ifelse(datW$precipitation > 5, NA, datW$wind.speed))
 
 #assert check to check for NA values
-assert(length(is.na(datW$wind.speedQ1)) == 0, "There are still suspicious values")
+windSNA <- is.na(datW$wind.speedQ1)
+airTNA <- is.na(datW$air.tempQ2)
+windSNA
+
+assert(length(length((is.na(datW$wind.speedQ1)[which(is.na(datW$wind.speedQ1==TRUE))]))) == length(datW$wind.speedQ1),
+       "There are still suspicious values")
 
 
-assert(length(datW$wind.speedQ1) == length(datW$air.tempQ2), "There are still suspicious values")
+
 
 
 #make it empty to start and add in features
