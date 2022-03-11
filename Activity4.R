@@ -58,20 +58,30 @@ full_join(newIris, height)            # Apply full_join dplyr function
 plot(iris$Sepal.Length,iris$Sepal.Width)
 
 #3a. now make the same plot in ggplot
-
+#aes represents x and y axis
+#geom_point plots Them
 my_plot = ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) + 
   geom_point()
 my_plot
-#3b. make a scatter plot with ggplot and get rid of  busy grid lines
 
+#3b. make a scatter plot with ggplot and get rid of busy grid lines
+#adding theme_classic() to ggplot removes the grid lines
 my_plot = ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) + 
   geom_point() + theme_classic()
 my_plot
+
 #3c. make a scatter plot with ggplot, remove grid lines, add a title and axis labels, 
 #    show species by color, and make the point size proportional to petal length
-
-my_plot + ggtitle("Scatter plot of Sepal length and Width") +
-  xlab("Sepal Length") + ylab("Sepal length")
+#aes for ggplot allows you to change color by species which is what we input
+#show.legend being true shows the legend for our plot
+#ggtitle represents the title
+#xlab and ylab label the axis respectively.
+my_plot = ggplot(iris, aes(Sepal.Length, Sepal.Width, colour = Species)) + 
+  geom_point(aes(size = Sepal.Length), show.legend = TRUE)+ 
+  theme_classic() + 
+  ggtitle("Scatter plot of Sepal length and Width") +
+  xlab("Sepal Length") + ylab("Sepal Width")
+my_plot
 
 #####################################
 ##### Question: how did         #####
