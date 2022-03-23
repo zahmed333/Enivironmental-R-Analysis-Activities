@@ -1,7 +1,6 @@
 flower <- iris[iris$Species=='virginica',]
 
 fit <- lm(flower$Petal.Length ~ flower$Sepal.Length)
-
 summary(fit)
 
 plot(flower$Sepal.Length, flower$Petal.Length,
