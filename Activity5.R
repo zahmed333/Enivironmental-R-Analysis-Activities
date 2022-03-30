@@ -47,6 +47,11 @@ datP$decYear <- ifelse(leap_year(datP$year),datP$year + (datP$decDay/366),
 
 plot(datD$decYear, datD$discharge, type="l", xlab="Year", ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")))
 
+
+
+
+#QUESTION 5
++
 #basic formatting
 aveF <- aggregate(datD$discharge, by=list(datD$doy), FUN="mean")
 colnames(aveF) <- c("doy","dailyAve")
@@ -82,3 +87,6 @@ legend("topright", c("mean","1 standard deviation"), #legend items
        col=c("black",rgb(0.392, 0.584, 0.929,.2)),#colors
        pch=c(NA,15),#symbols
        bty="n")#no legend border
+#2017 line
+line(datD$discharge[datD$year == "2017"],
+     color = "blue", pch = 15)
