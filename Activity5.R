@@ -152,7 +152,43 @@ ggplot(data= datD, aes(yearPlot,discharge)) +
 ggplot(data= datD, aes(yearPlot,discharge)) + 
   geom_violin()
 
-# Question 9
 datD$dose <- as.factor(ToothGrowth$dose)
-ggplot(data= datD, aes(yearPlot == "2016",discharge)) + 
+ggplot(data= datD, aes(yearPlot,discharge)) + 
   geom_violin()
+###########Question 9##############
+
+#isloate 2016 into data frame
+filter16 <- data.frame(datD$discharge[datD$year==2016],
+                      datD$doy[datD$year==2016],
+                      datD$year[datD$year=-2016],
+                      datD$month[datD$year=-2016])
+colnames(filter16) <- c("discharge", "doy", "year", "month")
+
+#isloate 2017 into data frame
+filter17 <- data.frame(datD$discharge[datD$year==2017],
+                      datD$doy[datD$year==2017],
+                      datD$year[datD$year=-2017],
+                      datD$month[datD$year=-2017])
+colnames(filter17) <- c("discharge", "doy", "year", "month")
+
+#fully filter by season for every
+fullFiltered16 <- ifelse(filter16$doy < 32, "Winter",
+                       ifelse(filter16$doy < 153, "Spring",
+                              ifelse(filter16$doy < 245, "Summer",
+                                     ifelse(filter16$doy < 336, "Fall", "Winter"))))
+
+fullFiltered17 <- ifelse(filter17$doy < 32, "Winter",
+                       ifelse(filter17$doy < 153, "Spring",
+                              ifelse(filter17$doy < 245, "Summer",
+                                     ifelse(filter17$doy < 336, "Fall", "Winter"))))
+ggplot(data= filter16, aes(x = season,y = discharge, fill = season)) + 
+  geom_violin() + 
+  xlab("Seasons") +
+  ylab(expression(paste("Discharge ft"^"3 ","sec"^"-1")))
+ 
+ggplot(data= filter17, aes(x = season,y = discharge, fill = season)) + 
+  geom_violin() + 
+  xlab("Seasons") +
+  ylab(expression(paste("Discharge ft"^"3 ","sec"^"-1")))
+ 
+}
