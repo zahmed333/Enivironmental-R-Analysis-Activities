@@ -19,6 +19,9 @@ datD$doy <- yday(datesD)
 datD$year <- year(datesD)
 #define time
 timesD <- hm(datD$time)
+#calculate month
+datD$month <- month(datesD)
+
 
 #### define time for precipitation #####    
 dateP <- ymd_hm(datP$DATE)
@@ -141,47 +144,36 @@ for(i in 1:nrow(hydroP)){
 
 
 library(ggplot2)
-#specify year as a factor
-datD$yearPlot <- as.factor(datD$year)
-#make a boxplot
-ggplot(data= datD, aes(yearPlot,discharge)) + 
-  geom_boxplot()
 
-
-#make a violin plot
-ggplot(data= datD, aes(yearPlot,discharge)) + 
-  geom_violin()
-
-datD$dose <- as.factor(ToothGrowth$dose)
-ggplot(data= datD, aes(yearPlot,discharge)) + 
-  geom_violin()
 ###########Question 9##############
 
+
 #isloate 2016 into data frame
-filter16 <- data.frame(datD$discharge[datD$year==2016],
-                      datD$doy[datD$year==2016],
-                      datD$year[datD$year=-2016],
-                      datD$month[datD$year=-2016])
+filter16 <- data.frame(datD$discharge[datD$year == 2016])
+filter16$doy <- data.frame(datD$doy[datD$year == 2016])
+filter16$year <- data.frame(datD$year[datD$year == 2016])
+filter16$month <- data.frame(datD$month[datD$year == 2016])
+
 colnames(filter16) <- c("discharge", "doy", "year", "month")
 
 #isloate 2017 into data frame
 filter17 <- data.frame(datD$discharge[datD$year==2017],
                       datD$doy[datD$year==2017],
-                      datD$year[datD$year=-2017],
-                      datD$month[datD$year=-2017])
+                      datD$year[datD$year==2017],
+                      datD$month[datD$year==2017])
 colnames(filter17) <- c("discharge", "doy", "year", "month")
 
 #fully filter by season for every
-fullFiltered16 <- ifelse(filter16$doy < 32, "Winter",
+filter16$season <- ifelse(filter16$doy < 32, "Winter",
                        ifelse(filter16$doy < 153, "Spring",
                               ifelse(filter16$doy < 245, "Summer",
                                      ifelse(filter16$doy < 336, "Fall", "Winter"))))
 
-fullFiltered17 <- ifelse(filter17$doy < 32, "Winter",
+filter17$season <- ifelse(filter17$doy < 32, "Winter",
                        ifelse(filter17$doy < 153, "Spring",
                               ifelse(filter17$doy < 245, "Summer",
                                      ifelse(filter17$doy < 336, "Fall", "Winter"))))
-ggplot(data= filter16, aes(x = season,y = discharge, fill = season)) + 
+ggplot(data= filter16, aes(x = season, y = discharge, fill = season)) + 
   geom_violin() + 
   xlab("Seasons") +
   ylab(expression(paste("Discharge ft"^"3 ","sec"^"-1")))
@@ -191,4 +183,4 @@ ggplot(data= filter17, aes(x = season,y = discharge, fill = season)) +
   xlab("Seasons") +
   ylab(expression(paste("Discharge ft"^"3 ","sec"^"-1")))
  
-}
+
