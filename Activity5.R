@@ -143,10 +143,10 @@ for(i in 1:nrow(hydroP)){
 
 
 
-library(ggplot2)
+
 
 ###########Question 9##############
-
+library(ggplot2)
 
 #isloate 2016 into data frame
 filter16 <- data.frame(datD$discharge[datD$year == 2016])
@@ -175,10 +175,12 @@ filter17$season <- ifelse(filter17$doy < 32, "Winter",
                                      ifelse(filter17$doy < 336, "Fall", "Winter"))))
 ggplot(data= filter16, aes(x = season, y = discharge, fill = season)) + 
   geom_violin() + 
+  ggtitle("2016 Discharge per Season") +
   xlab("Seasons") +
   ylab(expression(paste("Discharge ft"^"3 ","sec"^"-1")))
  
 ggplot(data= filter17, aes(x = season,y = discharge, fill = season)) + 
+  ggtitle("2017 Discharge per Season") +
   geom_violin() + 
   xlab("Seasons") +
   ylab(expression(paste("Discharge ft"^"3 ","sec"^"-1")))
