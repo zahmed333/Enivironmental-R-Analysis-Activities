@@ -1,6 +1,7 @@
 #GEOG331 Activity 3
 # Z.A. 03/23/2022
 library(lubridate)
+library(dplyr)
 #read in streamflow data
 datH <- read.csv("Z:\\data\\streamflow\\stream_flow_data.csv",
                  na.strings = c("Eqp"))
@@ -100,6 +101,50 @@ legend("topright", c("mean","1 standard deviation", "2017 stream flow"), #legend
 
 
 
+####Question 7###
+#Unique dates
+datP$uDate <- paste(yday(dateP), year (dateP))
+
+
+#uses unique dates to calc sum
+sumOfHours <- summarise(group_by(datP, uDate), year(dateP))
+#label columns
+colnames(sumOfHours) <- c("doy", "hours")
+
+#join used from last hw
+datP <- left_join(datP, sumOfHours, by =c("uDate" = "doy"))
+
+#Checks which day was measured all day long
+datP$allDayM <- ifelse(datP$HR == sum(c(0:23)), "24 hours", "not 24 hours")
+
+#match the same amount of dates as in datP
+datD$uDate <- paste(yday(datesD), year(datesD))
+
+#creating the x-axis ---- separated by .
+datD$xaxis <- as.numeric(paste(year(datesD), yday(datesD), sep = "."))
+
+datQ7 <- left_join(datD, datP, 
+                   by="uDate")
+
+#Plotting the discharge measurements
+#Symbolizing days that have precipitation measurements with a green color
+plot(datQ7$xaxis, datQ7$discharge,
+     main = "24-hour Percipitation Measurement Across Years",
+     ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")),
+     xlab="Year")
+
+points(datQ7$xaxis[datQ7$allDayM=="24 hours"],
+       datQ7$discharge[datQ7$allDayM=="24 hours"],
+       col = "Blue")
+
+
+
+
+
+
+
+
+
 
 
 #subsest discharge and precipitation within range of interest
@@ -138,9 +183,42 @@ for(i in 1:nrow(hydroP)){
           col=rgb(0.392, 0.584, 0.929,.2), border=NA)
 }
 
-## Question 8
+#############QUESTION 8##############
+
+hydroD <- datD[datD$doy >= 53 & datD$doy < 55 & datD$year == 2009,]
+hydroP <- datP[datP$doy >= 53 & datP$doy < 55 & datP$year == 2009,]
 
 
+min(hydroD$discharge)
+
+#get minimum and maximum range of discharge to plot
+#go outside of the range so that it's easy to see high/low values
+#floor rounds down the integer
+yl <- floor(min(hydroD$discharge))-1
+#ceiling rounds up to the integer
+yh <- ceiling(max(hydroD$discharge))+1
+#minimum and maximum range of precipitation to plot
+pl <- 0
+pm <-  ceiling(max(hydroP$HPCP))+.5
+#scale precipitation to fit on the 
+hydroP$pscale <- (((yh-yl)/(pm-pl)) * hydroP$HPCP) + yl
+
+par(mai=c(1,1,1,1))
+#make plot of discharge
+plot(hydroD$decDay,
+     hydroD$discharge, 
+     type="l", 
+     ylim=c(yl,yh), 
+     lwd=2,
+     xlab="Day of year", 
+     ylab=expression(paste("Discharge ft"^"3 ","sec"^"-1")))
+#add bars to indicate precipitation 
+for(i in 1:nrow(hydroP)){
+  polygon(c(hydroP$decDay[i]-0.017,hydroP$decDay[i]-0.017,
+            hydroP$decDay[i]+0.017,hydroP$decDay[i]+0.017),
+          c(yl,hydroP$pscale[i],hydroP$pscale[i],yl),
+          col=rgb(0.392, 0.584, 0.929,.2), border=NA)
+}
 
 
 
