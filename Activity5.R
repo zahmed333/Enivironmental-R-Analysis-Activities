@@ -135,7 +135,7 @@ plot(datQ7$xaxis, datQ7$discharge,
 
 points(datQ7$xaxis[datQ7$allDayM=="24 hours"],
        datQ7$discharge[datQ7$allDayM=="24 hours"],
-       col = "Blue")
+       col = "blue")
 
 
 
